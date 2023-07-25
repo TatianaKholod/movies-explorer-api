@@ -1,5 +1,6 @@
 const Movie = require('../models/movie');
 const NotFoundError = require('../errors/not-found-error');
+const ForbiddenError = require('../errors/Forbidden-error');
 
 const getMovies = (req, res, next) => Movie.find({}).sort({ createdAt: -1 })
   .then((movies) => res.send(movies))
@@ -49,7 +50,12 @@ const deleteMovieById = (req, res, next) => {
 
   return Movie.findById(moveId)
     .orFail(new NotFoundError('Объект не найден'))
-    .then((movie) => movie.deleteOne({ _id: moveId }))
+    .then((movie) => {
+      if (movie.owner._id.toString() !== req.user._id) {
+        return Promise.reject(new ForbiddenError('Объект не доступен'));
+      }
+      return movie.deleteOne({ _id: moveId });
+    })
     .then((data) => res.send(data))
     .catch(next);
 };
