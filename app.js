@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
 const routes = require('./routes');
-const { limiter } = require('./utils/rateLimit');
+const { limiter } = require('./utils/rate-limit');
 const { PORT, CORS_ORIGIN, HOST_MONGODD } = require('./utils/settings');
 
 const app = express();

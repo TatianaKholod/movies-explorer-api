@@ -1,10 +1,11 @@
 const rateLimit = require('express-rate-limit');
+const { limitMs, LimitReq } = require('./settings');
 
 const limiter = rateLimit({
-  // лимит в 15 минут
-  windowMs: 15 * 60 * 1000,
-  // не больше 100 запросов с одного IP за 15 мин
-  max: 100,
+  // лимит в limitMs милисек
+  windowMs: limitMs,
+  // не больше 100 запросов с одного IP за limitMs
+  max: LimitReq,
   // в заголовках вернет данные об ограничениях
   standardHeaders: true,
   // не будем отключать заголовки X-RateLimit-*
