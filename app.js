@@ -1,13 +1,22 @@
 const express = require('express');
+const helmet = require('helmet');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
 const routes = require('./routes');
+const { limiter } = require('./utils/rateLimit');
 const { PORT, CORS_ORIGIN, HOST_MONGODD } = require('./utils/settings');
 
 const app = express();
 
+// обеспечит настройку заголовков для безопасности
+app.use(helmet());
+
+// обеспечит ограничения по количеству запросов с одного адреса
+app.use(limiter);
+
+// ограничит межсайтовые запросы, только моими urlами
 app.use(cors({
   origin: [new RegExp(CORS_ORIGIN)],
   credentials: true,
