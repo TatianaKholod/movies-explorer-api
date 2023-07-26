@@ -24,14 +24,23 @@ const ShemaMovie = {
     movieId: Joi.number().required(),
   }),
 };
-const ShemaUser = {
+const ShemaLogin = {
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
     name: Joi.string().required().min(2).max(30),
   }),
 };
+const ShemaUser = {
+  body: Joi.object().keys({
+    email: Joi.string().required().email(),
+    name: Joi.string().required().min(2).max(30),
+  }),
+};
 
 module.exports = {
-  ShemaId, ShemaMovie, ShemaUser,
+  ShemaId,
+  ShemaMovie,
+  ShemaUser,
+  ShemaLogin,
 };

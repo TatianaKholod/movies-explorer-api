@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { celebrate, errors } = require('celebrate');
-const { ShemaUser } = require('../utils/celebrate');
+const { ShemaLogin } = require('../utils/celebrate');
 const userRoutes = require('./users');
 const movieRoutes = require('./movies');
 const authMiddelware = require('../middlewares/auth');
@@ -11,8 +11,8 @@ const { requestLogger, errorLogger } = require('../middlewares/logger');
 
 router.use(requestLogger); // логгер запросов
 
-router.post('/signin', celebrate(ShemaUser), login);
-router.post('/signup', celebrate(ShemaUser), createUser);
+router.post('/signin', celebrate(ShemaLogin), login);
+router.post('/signup', celebrate(ShemaLogin), createUser);
 
 router.use('/', authMiddelware);
 router.use('/users', userRoutes);
