@@ -23,7 +23,7 @@ const login = (req, res, next) => {
       res.cookie('token', token, {
         maxAge: +COOKIE_MAXAGE,
         httpOnly: true,
-        SameSite: 'None',
+        sameSite: 'none',
       });
       const u = data.toJSON();
       delete u.password;
