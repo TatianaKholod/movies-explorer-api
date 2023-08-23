@@ -15,16 +15,18 @@ const login = (req, res, next) => {
           // хеши не совпали — отклоняем промис
           return Promise.reject(new UnauthorizedError('Неправильные почта или пароль'));
         }
-        return user._id;
+        return user;
       }))
-    .then((id) => {
-      const token = generateToken(id);
+    .then((data) => {
+      const token = generateToken(data._id);
       // токен сохранили в httpOnly куку
       res.cookie('token', token, {
         maxAge: +COOKIE_MAXAGE,
         httpOnly: true,
       });
-      return res.send({ message: 'Приветствую!' });
+      const u = data.toJSON();
+      delete u.password;
+      return res.send(u);
     })
     .catch((err) => next(err));
 };

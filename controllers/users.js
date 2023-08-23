@@ -13,7 +13,6 @@ const getUser = (req, res, next) => {
 const updateUser = (req, res, next) => {
   const userId = req.user._id;
   const { name, email } = req.body;
-
   return User.findByIdAndUpdate(userId, { name, email }, {
     new: true, // обработчик then получит на вход обновлённую запись
     runValidators: true, // данные будут валидированы перед изменением
