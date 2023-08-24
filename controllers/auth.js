@@ -34,7 +34,10 @@ const login = (req, res, next) => {
 };
 
 const logout = (req, res) => {
-  res.clearCookie('token');
+  res.clearCookie('token', {
+    sameSite: 'none',
+    secure: true,
+  });
   return res.send({ message: 'Возвращайся!' });
 };
 
